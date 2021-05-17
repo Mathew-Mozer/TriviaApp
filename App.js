@@ -1,8 +1,9 @@
-import React from 'react'
-import { StyleSheet, Text } from 'react-native'
-import HomeScreen from './screens/home'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react'
+import { StyleSheet } from 'react-native'
+import HeaderTitle from './components/navigation/header'
+import HomeScreen from './screens/home'
 
 const Stack = createStackNavigator()
 
@@ -10,17 +11,20 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='Home' component={HomeScreen} />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            headerStyle: styles.headerStyle,
+            title: 'Welcome to the\nTrivia Challenge!',
+            headerTitle: HeaderTitle,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  headerStyle: { backgroundColor: '#2272f2', height: 150 },
 })
