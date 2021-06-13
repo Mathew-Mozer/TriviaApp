@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
-import useQuiz from '../../hooks/useQuiz'
+import useQuestions from '../../hooks/useQuestions'
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
+  const { replace } = navigation
   const { getQuestions, questions, questionsLoading, questionsError } =
-    useQuiz()
+    useQuestions()
 
   useEffect(() => {
     getQuestions()
@@ -55,9 +56,7 @@ const HomeScreen = () => {
         <Text style={styles.textBox}>Can you score 100%</Text>
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity
-          onPress={() => console.log('replace with navigation')}
-        >
+        <TouchableOpacity onPress={() => replace('Quiz')}>
           <Text style={styles.buttonText}>Begin</Text>
         </TouchableOpacity>
       </View>

@@ -1,5 +1,6 @@
-import { useReducer, useState } from 'react'
-import { quizReducer, addQuestions } from './reducer'
+import { useState } from 'react'
+import { useQuiz } from '../../providers/QuizProvider'
+import { addQuestions } from '../../providers/QuizProvider/ActionCreators'
 
 const mockData = {
   response_code: 0,
@@ -12,14 +13,19 @@ const mockData = {
       correct_answer: 'True',
       incorrect_answers: ['False'],
     },
+    {
+      category: 'Cat 2',
+      type: 'boolean',
+      difficulty: 'hard',
+      question: 'q2',
+      correct_answer: 'True',
+      incorrect_answers: ['False'],
+    },
   ],
 }
-const initialState = {
-  questions: [],
-}
 
-export default useQuiz = () => {
-  const [state, dispatch] = useReducer(quizReducer, initialState)
+export default useQuestions = () => {
+  const { state, dispatch } = useQuiz()
   const [questionsLoading, setQuestionsLoading] = useState(true)
   const [questionsError, setQuestionsError] = useState()
 
@@ -50,8 +56,20 @@ export default useQuiz = () => {
       }, 2000)
     })
 
+  const getQuestion = () => {
+    console.log('state', state.questions)
+    return state.questions.find((question) => {
+      const ans = state.answers.some(
+        (answer) => answer.question.localeCompare(question.question) === 0
+      )
+      console.log('ans', ans)
+      return !ans
+    })
+  }
+
   return {
     getQuestions,
+    getQuestion,
     questionsLoading,
     questionsError,
     questions: state.questions,
