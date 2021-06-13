@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import useQuestions from '../../hooks/useQuestions'
+import useAnswers from '../../hooks/useAnswers'
 
 const QuizScreen = ({ navigation }) => {
-  const { navigate } = navigation
+  const { replace } = navigation
   const { getQuestion } = useQuestions()
+  const { putAnswer, answers } = useAnswers()
   const [currentQuestion, setCurrentQuestion] = useState()
 
   useEffect(() => {
     const q = getQuestion()
-    if (q) {
-      console.warn(q.question)
-      setCurrentQuestion(q)
+    setCurrentQuestion(q)
+    if (!q) {
+      // Replace with navigation to score screen
+      replace('Home')
     }
-  }, [])
+  }, [answers])
 
   useEffect(() => {
     if (currentQuestion) {
@@ -22,17 +25,19 @@ const QuizScreen = ({ navigation }) => {
     }
   }, [currentQuestion])
 
-  if (!currentQuestion) {
-    return (
-      <View style={{ flex: 1 }}>
-        <Text style={[styles.textBox]}>No current question</Text>
-      </View>
-    )
+  const handleAnswer = (answer) => {
+    putAnswer(currentQuestion.question, answer)
   }
 
   return (
     <View style={{ flex: 1 }}>
       <Text style={[styles.textBox]}>{currentQuestion?.question}</Text>
+      <TouchableOpacity onPress={() => handleAnswer(true)}>
+        <Text style={styles.buttonText}>True</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => handleAnswer(false)}>
+        <Text style={styles.buttonText}>False</Text>
+      </TouchableOpacity>
     </View>
   )
 }
