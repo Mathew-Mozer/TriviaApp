@@ -1,10 +1,11 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { StyleSheet } from 'react-native'
 import HeaderTitle from './components/navigation/header'
 import HomeScreen from './screens/home'
 import QuizScreen from './screens/quiz'
+import ResultsScreen from './screens/results'
 
 import { QuizProvider } from './providers/QuizProvider'
 
@@ -27,6 +28,14 @@ export default function App() {
           <Stack.Screen
             name="Quiz"
             component={QuizScreen}
+            options={{
+              headerStyle: styles.headerStyle,
+              headerTitle: HeaderTitle,
+            }}
+          />
+          <Stack.Screen
+            name="Results"
+            component={ResultsScreen}
             options={{
               headerStyle: styles.headerStyle,
               headerTitle: HeaderTitle,

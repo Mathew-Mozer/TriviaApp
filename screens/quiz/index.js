@@ -11,11 +11,10 @@ const QuizScreen = ({ navigation }) => {
   const [currentQuestion, setCurrentQuestion] = useState()
 
   useEffect(() => {
-    const q = getQuestion()
-    setCurrentQuestion(q)
-    if (!q) {
-      // Replace with navigation to score screen
-      replace('Home')
+    const question = getQuestion()
+    setCurrentQuestion(question)
+    if (!question) {
+      replace('Results')
     }
   }, [answers])
 
