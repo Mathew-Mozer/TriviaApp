@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Button } from 'react-native-elements'
 import PropTypes from 'prop-types'
 import useQuestions from '../../hooks/useQuestions'
 
 const HomeScreen = ({ navigation }) => {
-  const { replace } = navigation
+  const { navigate } = navigation
   const { getQuestions, questions, questionsLoading, questionsError } =
     useQuestions()
 
@@ -55,10 +56,18 @@ const HomeScreen = ({ navigation }) => {
       <View style={{ flex: 2 }}>
         <Text style={styles.textBox}>Can you score 100%</Text>
       </View>
+
       <View style={styles.footer}>
-        <TouchableOpacity onPress={() => replace('Quiz')}>
-          <Text style={styles.buttonText}>Begin</Text>
-        </TouchableOpacity>
+        <Button
+          buttonStyle={{
+            borderRadius: 0,
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 0,
+          }}
+          onPress={() => navigate('Quiz')}
+          title="Begin"
+        />
       </View>
     </View>
   )

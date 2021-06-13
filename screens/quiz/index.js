@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
+import { Card, Button } from 'react-native-elements'
 import PropTypes from 'prop-types'
 import useQuestions from '../../hooks/useQuestions'
 import useAnswers from '../../hooks/useAnswers'
 
 const QuizScreen = ({ navigation }) => {
   const { replace } = navigation
-  const { getQuestion } = useQuestions()
+  const { getQuestion, questions } = useQuestions()
   const { putAnswer, answers } = useAnswers()
   const [currentQuestion, setCurrentQuestion] = useState()
 
@@ -28,16 +29,47 @@ const QuizScreen = ({ navigation }) => {
     putAnswer(currentQuestion.question, answer)
   }
 
+  if (answers.length === questions.length) {
+    return null
+  }
+
   return (
-    <View style={{ flex: 1 }}>
-      <Text style={[styles.textBox]}>{currentQuestion?.question}</Text>
-      <TouchableOpacity onPress={() => handleAnswer(true)}>
-        <Text style={styles.buttonText}>True</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleAnswer(false)}>
-        <Text style={styles.buttonText}>False</Text>
-      </TouchableOpacity>
-    </View>
+    <Card>
+      <Text style={[styles.textBox, { paddingBottom: 20 }]}>
+        {currentQuestion?.question}
+      </Text>
+      <Card.Divider />
+      <Text style={[styles.textBox, { paddingBottom: 20 }]}>
+        {answers.length + 1}/{questions.length}
+      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+        }}
+      >
+        <Button
+          buttonStyle={{
+            borderRadius: 0,
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 0,
+          }}
+          onPress={() => handleAnswer('True')}
+          title="True"
+        />
+        <Button
+          buttonStyle={{
+            borderRadius: 0,
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 0,
+          }}
+          onPress={() => handleAnswer('False')}
+          title="False"
+        />
+      </View>
+    </Card>
   )
 }
 
@@ -51,7 +83,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
   },
-  footer: { padding: 20 },
   buttonText: {
     fontSize: 30,
     textAlign: 'center',

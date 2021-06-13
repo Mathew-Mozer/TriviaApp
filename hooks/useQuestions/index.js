@@ -1,23 +1,17 @@
 import { useState } from 'react'
 import { useQuiz } from '../../providers/QuizProvider'
+import * as he from 'he'
 import { addQuestions } from '../../providers/QuizProvider/ActionCreators'
 
 const mockData = {
   response_code: 0,
   results: [
     {
-      category: 'Entertainment: Video Games',
+      category: 'Mythology',
       type: 'boolean',
       difficulty: 'hard',
-      question: 'Unturned originally started as a Roblox game.',
-      correct_answer: 'True',
-      incorrect_answers: ['False'],
-    },
-    {
-      category: 'Cat 2',
-      type: 'boolean',
-      difficulty: 'hard',
-      question: 'q2',
+      question:
+        'Rannamaari was a sea demon that haunted the people of the Maldives and had to be appeased monthly with the sacrifice of a virgin girl.',
       correct_answer: 'True',
       incorrect_answers: ['False'],
     },
@@ -38,7 +32,11 @@ export default useQuestions = () => {
       setTimeout(() => {
         setQuestionsLoading(false)
         try {
-          dispatch(addQuestions(mockData.results))
+          const cleanData = mockData.results.map((q) => ({
+            ...q,
+            question: he.decode(q.question),
+          }))
+          dispatch(addQuestions(cleanData))
           if (mockData.results.length < 1) {
             throw Error(
               'No Questions received. Please contact quiz administrator'
@@ -57,12 +55,10 @@ export default useQuestions = () => {
     })
 
   const getQuestion = () => {
-    console.log('state', state.questions)
     return state.questions.find((question) => {
       const ans = state.answers.some(
         (answer) => answer.question.localeCompare(question.question) === 0
       )
-      console.log('ans', ans)
       return !ans
     })
   }
