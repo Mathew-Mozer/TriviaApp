@@ -3,13 +3,14 @@ import React, { useEffect } from 'react'
 import { FlatList, View } from 'react-native'
 import { Button, ListItem } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import useAnswers from '../../hooks/useAnswers'
+import { useAnswers } from '../../hooks'
 
 const ResultIcon = ({ isCorrect }) => {
   if (isCorrect) {
     return <Icon size={30} name={'check-circle-o'} style={{ color: 'green' }} />
-  } else
+  } else {
     return <Icon size={30} name={'times-circle-o'} style={{ color: 'red' }} />
+  }
 }
 
 const AnsweredQuestion = ({ index, item }) => {
@@ -26,17 +27,17 @@ const AnsweredQuestion = ({ index, item }) => {
 
 const ResultsScreen = ({ navigation }) => {
   const { replace } = navigation
-  const { clearAnswers, answers, correctAnswers } = useAnswers()
+  const { clearAnswers, answers, getCorrectCount } = useAnswers()
 
   const handleReset = () => {
     clearAnswers()
-    replace('Quiz')
+    replace('Home')
   }
   useEffect(() => {
     navigation.setOptions({
-      title: `You scored \n${correctAnswers} / ${answers.length}`,
+      title: `You scored \n${getCorrectCount} / ${answers.length}`,
     })
-  }, [answers, correctAnswers])
+  }, [answers, getCorrectCount])
 
   const Footer = () => (
     <View style={{ padding: 30 }}>
@@ -66,7 +67,18 @@ const ResultsScreen = ({ navigation }) => {
 ResultsScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    setOptions: PropTypes.func.isRequired,
+    replace: PropTypes.func.isRequired,
   }).isRequired,
+}
+
+AnsweredQuestion.propTypes = {
+  index: PropTypes.number.isRequired,
+  item: PropTypes.shape({
+    isCorrect: PropTypes.bool,
+    question: PropTypes.any,
+    answer: PropTypes.any,
+  }),
 }
 
 export default ResultsScreen

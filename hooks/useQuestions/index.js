@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useQuiz } from '../../providers/QuizProvider'
 import { addQuestions } from '../../providers/QuizProvider/ActionCreators'
 
-export default useQuestions = () => {
+export const useQuestions = () => {
   const { state, dispatch } = useQuiz()
   const [questionsLoading, setQuestionsLoading] = useState(false)
   const [questionsError, setQuestionsError] = useState()
@@ -28,7 +28,7 @@ export default useQuestions = () => {
         throw Error('No Questions received. Please contact quiz administrator')
       }
 
-      if (data.response_code != 0) {
+      if (data.response_code !== 0) {
         throw Error('Error getting questions')
       }
 

@@ -2,8 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button, Card } from 'react-native-elements'
-import useAnswers from '../../hooks/useAnswers'
-import useQuestions from '../../hooks/useQuestions'
+import { useAnswers, useQuestions } from '../../hooks'
 
 const QuizScreen = ({ navigation }) => {
   const { replace } = navigation
@@ -49,22 +48,12 @@ const QuizScreen = ({ navigation }) => {
         }}
       >
         <Button
-          buttonStyle={{
-            borderRadius: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-          }}
+          buttonStyle={styles.buttonStyle}
           onPress={() => handleAnswer('True')}
           title="True"
         />
         <Button
-          buttonStyle={{
-            borderRadius: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-          }}
+          buttonStyle={styles.buttonStyle}
           onPress={() => handleAnswer('False')}
           title="False"
         />
@@ -87,11 +76,19 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: 'center',
   },
+  buttonStyle: {
+    borderRadius: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 0,
+  },
 })
 
 QuizScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    setOptions: PropTypes.func.isRequired,
+    replace: PropTypes.func.isRequired,
   }).isRequired,
 }
 

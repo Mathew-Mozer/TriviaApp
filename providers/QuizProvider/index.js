@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { useReducer } from 'react'
 import { quizReducer } from './reducer'
 const initialState = {
@@ -16,3 +17,5 @@ export const QuizProvider = ({ children }) => {
     </QuizContext.Provider>
   )
 }
+
+QuizProvider.propTypes = { children: PropTypes.node.isRequired }

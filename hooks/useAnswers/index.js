@@ -4,14 +4,14 @@ import {
   clearAnswers,
 } from '../../providers/QuizProvider/ActionCreators'
 
-export default useAnswers = () => {
+export const useAnswers = () => {
   const { state, dispatch } = useQuiz()
 
   const putAnswer = (question, answer) => {
     dispatch(addAnswer(question, answer))
   }
 
-  const correctAnswers = state.answers.reduce(
+  const getCorrectCount = state.answers.reduce(
     (total, currentAnswer) => (currentAnswer.isCorrect ? total + 1 : total),
     0
   )
@@ -20,6 +20,6 @@ export default useAnswers = () => {
     putAnswer,
     answers: state.answers,
     clearAnswers: () => dispatch(clearAnswers()),
-    correctAnswers,
+    getCorrectCount,
   }
 }

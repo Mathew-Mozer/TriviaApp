@@ -8,7 +8,16 @@ import {
   View,
 } from 'react-native'
 import { Button } from 'react-native-elements'
-import useQuestions from '../../hooks/useQuestions'
+import { useQuestions } from '../../hooks'
+
+const QuestionsLoading = () => (
+  <View style={styles.container}>
+    <View style={styles.textBox}>
+      <Text style={styles.buttonText}>Loading Questions</Text>
+      <ActivityIndicator size="large" color="#0000ff" />
+    </View>
+  </View>
+)
 
 const HomeScreen = ({ navigation }) => {
   const { navigate } = navigation
@@ -30,15 +39,6 @@ const HomeScreen = ({ navigation }) => {
         <TouchableOpacity onPress={() => getQuestions()}>
           <Text style={styles.buttonText}>Retry</Text>
         </TouchableOpacity>
-      </View>
-    </View>
-  )
-
-  const QuestionsLoading = () => (
-    <View style={styles.container}>
-      <View style={styles.textBox}>
-        <Text style={styles.buttonText}>Loading Questions</Text>
-        <ActivityIndicator size="large" color="#0000ff" />
       </View>
     </View>
   )
@@ -66,12 +66,7 @@ const HomeScreen = ({ navigation }) => {
 
       <View style={styles.footer}>
         <Button
-          buttonStyle={{
-            borderRadius: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-          }}
+          buttonStyle={styles.buttonStyle}
           onPress={() => navigate('Quiz')}
           title="Begin"
         />
@@ -94,6 +89,12 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 30,
     textAlign: 'center',
+  },
+  buttonStyle: {
+    borderRadius: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginBottom: 0,
   },
 })
 
