@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import { Card, Button } from 'react-native-elements'
 import PropTypes from 'prop-types'
-import useQuestions from '../../hooks/useQuestions'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { Button, Card } from 'react-native-elements'
 import useAnswers from '../../hooks/useAnswers'
+import useQuestions from '../../hooks/useQuestions'
 
 const QuizScreen = ({ navigation }) => {
   const { replace } = navigation

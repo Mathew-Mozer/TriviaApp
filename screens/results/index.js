@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native'
-import { Card, ListItem, Button } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome'
 import PropTypes from 'prop-types'
-import useQuestions from '../../hooks/useQuestions'
+import React, { useEffect } from 'react'
+import { FlatList, View } from 'react-native'
+import { Button, ListItem } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import useAnswers from '../../hooks/useAnswers'
 
 const ResultIcon = ({ isCorrect }) => {
@@ -26,9 +19,6 @@ const AnsweredQuestion = ({ index, item }) => {
       <ListItem.Content>
         <ListItem.Title>{item.question}</ListItem.Title>
         <ListItem.Subtitle>You answered: {item.answer}</ListItem.Subtitle>
-        <ListItem.Subtitle>
-          Correct Answer: {item.correct_answer}
-        </ListItem.Subtitle>
       </ListItem.Content>
     </ListItem>
   )

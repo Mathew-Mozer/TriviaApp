@@ -1,7 +1,13 @@
-import React, { useEffect } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
-import { Button } from 'react-native-elements'
 import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import { Button } from 'react-native-elements'
 import useQuestions from '../../hooks/useQuestions'
 
 const HomeScreen = ({ navigation }) => {
@@ -32,6 +38,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.textBox}>
         <Text style={styles.buttonText}>Loading Questions</Text>
+        <ActivityIndicator size="large" color="#0000ff" />
       </View>
     </View>
   )

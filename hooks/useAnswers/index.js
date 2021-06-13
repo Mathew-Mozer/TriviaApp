@@ -1,8 +1,8 @@
+import { useQuiz } from '../../providers/QuizProvider'
 import {
   addAnswer,
   clearAnswers,
 } from '../../providers/QuizProvider/ActionCreators'
-import { useQuiz } from '../../providers/QuizProvider'
 
 export default useAnswers = () => {
   const { state, dispatch } = useQuiz()

@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import axios from 'axios'
-import { useQuiz } from '../../providers/QuizProvider'
 import * as he from 'he'
+import { useState } from 'react'
+import { useQuiz } from '../../providers/QuizProvider'
 import { addQuestions } from '../../providers/QuizProvider/ActionCreators'
 
 export default useQuestions = () => {
@@ -13,71 +13,39 @@ export default useQuestions = () => {
   const getQuestions = async () => {
     setQuestionsLoading(true)
     try {
-      const response = await axios.get(
+      const { data } = await axios.get(
         'https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean'
       )
-      const cleanData = response.data.results.map((q) => ({
+
+      const cleanData = data.results.map((q) => ({
         ...q,
         question: he.decode(q.question),
       }))
+
       dispatch(addQuestions(cleanData))
-      if (response.data.results.length < 1) {
+
+      if (data.results.length < 1) {
         throw Error('No Questions received. Please contact quiz administrator')
       }
 
-      if (response.data.response_code != 0) {
+      if (data.response_code != 0) {
         throw Error('Error getting questions')
       }
-      console.log('data', response.data)
 
       setQuestionsError(null)
     } catch (error) {
       setQuestionsError(error.message)
-      //console.log(error)
     } finally {
       setQuestionsLoading(false)
     }
   }
 
-  /*
-
-    new Promise((resolve, reject) => {
-      
-
-      // Mocking server response
-
-       setTimeout(() => {
-        setQuestionsLoading(false)
-        try {
-          const cleanData = mockData.results.map((q) => ({
-            ...q,
-            question: he.decode(q.question),
-          }))
-          dispatch(addQuestions(cleanData))
-          if (mockData.results.length < 1) {
-            throw Error(
-              'No Questions received. Please contact quiz administrator'
-            )
-          }
-
-          if (mockData.response_code != 0) {
-            throw Error('Error getting questions')
-          }
-        } catch (error) {
-          setQuestionsError(error.message)
-        }
-
-        resolve(mockData)
-      }, 2000)
-    }) */
-
   const getQuestion = () => {
-    return state.questions.find((question) => {
-      const ans = state.answers.some(
-        (answer) => answer.question.localeCompare(question.question) === 0
-      )
-      return !ans
-    })
+    // Finds the next question that isn't in the answer array
+    return state.questions.find(
+      (q) =>
+        !state.answers.some((a) => a.question.localeCompare(q.question) === 0)
+    )
   }
 
   return {
